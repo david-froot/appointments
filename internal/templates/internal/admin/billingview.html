@@ -1,0 +1,111 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+<table data-toggle="table" data-search="true">
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Name</th>
+        <th>Insurance</th>
+        <th>Policy #</th>
+        <th>Group #</th>
+        <th>Insurance OK</th>
+        <th>Paid</th>
+        <th>Billing Sent</th>
+        <th>Reimburse Done</th>
+        <th>More</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for a in records %}
+    
+        {% if a.isBooked %}
+        <tr id="tr-id-1" class="tr-class-1">
+            <td>{{a.start|date}} {{a.start|date:'h:i'}} - {{a.end|date:'h:i'}}</td>
+            <td>{{a.patient.info.first_name}} {{a.patient.info.last_name}}</td>
+            <td>{{a.patient.info.insurer.insurerName}}</td>
+            <td>{{a.patient.info.insurerPolicyNumber}}</td>
+            <td>{{a.patient.info.insurerGroupNumber}}</td>
+            <td {% if a.reimbursement_confirmed %} class="success" {%else%} class="danger" {%endif%}>
+                <span id="rc{{a.id}}">{{a.reimbursement_confirmed}}</span>
+                <a href="#" onclick="updateRC({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>
+            </td>
+            <td {% if a.is_paid %} class="success" {%else%} class="danger" {%endif%}>
+                <span id="paid{{a.id}}">{{a.is_paid}}</span>
+                <a href="#" onclick="updateIsPaid({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>
+            </td>
+            <td {% if a.billing_sent %} class="success" {%else%} class="danger" {%endif%}>
+                <span id="bs{{a.id}}">{{a.billing_sent}}</span>
+                <a href="#" onclick="updateBillingSent({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>
+            </td>
+            <td {% if a.billing_recieved %} class="success" {%else%} class="danger" {%endif%}>
+                <span id="br{{a.id}}">{{a.billing_recieved}}</span>
+                <a href="#" onclick="updateBillingRecieved({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>
+            </td>
+            <td>{% if a.is_booked%}
+                <a href="/portal/admin/appointment/info/{{a.id}}/">More</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td>{{a.start|date}} {{a.start|date:'h:i'}} - {{a.end|date:'h:i'}}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {% endif %}
+    
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<script>
+
+
+delta = function(url, t) {
+    $.ajax({
+          url : url,
+          success : function(json) {
+                if ($(t).text()=='False') {  
+                    $(t).text('True'); 
+                    $(t).parent().removeClass().addClass('success')
+                } else{ 
+                    $(t).text('False'); 
+                    $(t).parent().removeClass().addClass('danger')
+                }
+          }});
+}
+updateRC = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=reimbursementConfirmed","#rc"+slot_id)
+}
+updateIsPaid = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=isPaid","#paid"+slot_id)
+}
+updateBillingSent = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=billingSent","#bs"+slot_id)
+}
+updateBillingRecieved = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=billingRecieved","#br"+slot_id)
+}
+
+
+
+
+</script>
+
+
+
+
+
+
+
+{% endblock %}
+
+

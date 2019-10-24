@@ -1,0 +1,39 @@
+{% extends "core.html" %}
+{% block content %}
+
+<div class="container" style="padding-top: 100px;">
+	<!-- MEssage box -->
+	<div class="row">
+		<div class="col-sm-2" data-tabs="tabs">
+			<ul class="nav nav-pills nav-stacked">
+				<li {% if "dashboard" in request.path %} class="active" {% endif %}>
+					<a href="/patients/dashboard/">Dashboard</a>
+				</li>
+
+				<li {% if "forms" in request.path %} class="active" {% endif %}>
+					<a href="/patients/forms/">My Forms</a>
+				</li>
+				<li {% if "appointment" in request.path %} class="active" {% endif %}>
+					<a href="/appointments/">My Appointments</a>
+				</li>
+				
+				<li {% if "myhealth" in request.path %} class="active" {% endif %}>
+					<a href="/patients/myhealth/">My Dental Health</a>
+				</li>
+				<li {% if "settings" in request.path %} class="active" {% endif %}>
+					<a href="/patients/settings/">Settings</a>
+				</li>
+			</ul>
+		</div>
+
+
+		<div class="col-sm-10">
+			
+			{% block tabcontent %}
+
+			{% endblock %}
+		</div>
+	</div>
+
+</div>
+{% endblock %}

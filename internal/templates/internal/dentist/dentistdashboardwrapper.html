@@ -1,0 +1,25 @@
+{% extends "core.html" %}
+{% block content %}
+
+<div class="container" style="padding-top: 70px;">
+    <div class="row">
+        <div class="col-sm-2" data-tabs="tabs">
+            <ul class="nav nav-pills nav-stacked">
+                <li {% if "dashboard" in request.path %} class="active" {% endif %}>
+                    <a href="/dentist/dashboard/">Dashboard</a>
+                </li>
+                <li {% if "sitevisit" in request.path %} class="active" {% endif %}>
+                    <a href="/dentist/patients/">Site Visits</a>
+                </li>
+
+            </ul>
+        </div>
+        <div class="col-sm-10" id="topthing">
+            
+            {% block tabcontent %}
+            {% endblock %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,192 @@
+{% extends "hygenist/dashboard_wrapper.html" %}
+{% block tabcontent %}
+<div class="col-md-12">
+	<div class="row">
+		<ol class="breadcrumb">
+		    <li><a href="{% url 'hygenist:dashboard'%}">Dashboard</a></li>
+		    <li><a href="{% url 'hygenist:visits' %}">Site Visits</a></li>
+		    <li class="active">Appointment Schedule</li>
+	    </ol>
+		<h1>Site Visit Schedule on {{appts.0.start|date}}</h1>
+		<hr>
+
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<table class="table">
+				<tbody>
+					<tr>
+						<td><b>Organization</b></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td><b>Visit Address</b></td>
+						<td>{{appts.0.sitevisit.address}}</td>
+					</tr>
+					<tr>
+						<td><b>City State</b></td>
+						<td>{{appts.0.sitevisit.city}} {{appts.0.sitevisit.state}} {{appts.0.sitevisit.zipcode}}</td>
+					</tr>
+					<tr>
+						<td><b>Contact Person</b></td>
+						<td>{{appts.0.sitevisit.organization.user.first_name}} {{appts.0.sitevisit.organization.user.last_name}}</td>
+					</tr>
+					<tr>
+						<td><b>Contact Number</b></td>
+						<td>{{appts.0.sitevisit.organization.user.phone_number}}</td>
+					</tr>
+					<tr>
+						<td><b>Contact Email</b></td>
+						<td>{{appts.0.sitevisit.organization.user.email}}</td>
+					</tr>
+					<tr>
+						<td><b>Appt Window</b></td>
+						<td>{{appts.0.sitevisit.start}} - {{appts.0.sitevisit.end}} </td>
+					</tr>
+					<tr>
+						<td><b>Details</b></td>
+						<td>{{appts.0.sitevisit.details}}</td>
+
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+		<div class="col-sm-6">
+		 <div id="map" style="height: 300px;"></div>
+		    <script>
+		      var map;
+
+		      function initMap() {
+		        map = new google.maps.Map(document.getElementById('map'), {
+		          center: {lat: -34.397, lng: 150.644},
+		          zoom: 9
+		        });
+
+		        google.maps.event.addListenerOnce(map, 'idle', codeAddress);
+		      }
+
+function codeAddress() {
+
+    // Define address to center map to
+    var address = ' {{appts.0.sitevisit.address}} {{appts.0.sitevisit.city}} {{appts.0.sitevisit.state}} {{appts.0.sitevisit.zipcode}}  ';
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+        'address': address
+    }, function (results, status) {
+
+        if (status == google.maps.GeocoderStatus.OK) {
+
+            // Center map on location
+            map.setCenter(results[0].geometry.location);
+
+            // Add marker on location
+            var marker = new google.maps.Marker({
+                map: map,
+                position: results[0].geometry.location
+            });
+
+        } else {
+
+            alert("Geocode was not successful for the following reason: " + status);
+        }
+    });
+}
+
+
+		    </script>
+		    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZRiw0uIBCWKPtUTuh1abqssTHWfRW3Iw&callback=initMap"
+		    async defer></script>
+		</div>
+	</div>
+	<div class="row">
+		<table data-toggle="table" data-search="true" data-show-columns="true">
+			<p>
+			</p>
+		    <thead>
+		    <tr>
+		        <th>Date</th>
+		        <th>Name</th>
+		        <th data-visible="false">Insurance</th>
+		        <th data-visible="false">Policy #</th>
+		        <th data-visible="false">Group #</th>
+		        <th data-visible="false">Insurance OK</th>
+		        <th>Paid</th>
+		        <th data-visible="false">Billing Sent</th>
+		        <th data-visible="false">Reimburse Done</th>
+		        <th>More</th>
+		    </tr>
+		    </thead>
+		    <tbody>
+		    {% for a in appts %}
+		    
+		        
+		        <tr id="tr-id-1" class="tr-class-1">
+		            <td>{{a.start|date:'h:i'}} - {{a.end|date:'h:i'}}</td>
+		            <td>{{a.patient.info.first_name}} {{a.patient.info.last_name}}</td>
+		            <td>{{a.patient.info.insurer.insurerName}}</td>
+		            <td>{{a.patient.info.insurerPolicyNumber}}</td>
+		            <td>{{a.patient.info.insurerGroupNumber}}</td>
+		            <td {% if a.reimbursement_confirmed %} class="success" {%else%} class="danger" {%endif%}>
+		                <span id="rc{{a.id}}">{{a.reimbursement_confirmed}}</span>
+		                <!--<a href="#" onclick="updateRC({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>-->
+		            </td>
+		            <td {% if a.is_paid %} class="success" {%else%} class="danger" {%endif%}>
+		                <span id="paid{{a.id}}">{{a.is_paid}}</span>
+		                <!--<a href="#" onclick="updateIsPaid({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>-->
+		            </td>
+		            <td {% if a.billing_sent %} class="success" {%else%} class="danger" {%endif%}>
+		                <span id="bs{{a.id}}">{{a.billing_sent}}</span>
+		                <!--<a href="#" onclick="updateBillingSent({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>-->
+		            </td>
+		            <td {% if a.billing_recieved %} class="success" {%else%} class="danger" {%endif%}>
+		                <span id="br{{a.id}}">{{a.billing_recieved}}</span>
+		                <!--<a href="#" onclick="updateBillingRecieved({{a.id}})"><i class="glyphicon glyphicon-refresh"></i></a>-->
+		            </td>
+		            <td>{% if a.is_booked%}
+		                <a href="{% url 'hygenist:appt' a.id %}">More</a>
+		                {% endif %}
+		            </td>
+		        </tr>
+		    
+		    {% endfor %}
+		    </tbody>
+		</table>
+	</div>
+</div>
+
+
+<script>
+
+
+delta = function(url, t) {
+    $.ajax({
+          url : url,
+          success : function(json) {
+                if ($(t).text()=='False') {  
+                    $(t).text('True'); 
+                    $(t).parent().removeClass().addClass('success')
+                } else{ 
+                    $(t).text('False'); 
+                    $(t).parent().removeClass().addClass('danger')
+                }
+          }});
+}
+updateRC = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=reimbursementConfirmed","#rc"+slot_id)
+}
+updateIsPaid = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=isPaid","#paid"+slot_id)
+}
+updateBillingSent = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=billingSent","#bs"+slot_id)
+}
+updateBillingRecieved = function(slot_id) {
+    delta("/portal/admin/appointment/togglesetting/"+slot_id+"/?attr=billingRecieved","#br"+slot_id)
+}
+
+
+
+
+</script>
+{% endblock %}

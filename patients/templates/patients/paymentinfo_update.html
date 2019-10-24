@@ -1,0 +1,43 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-6">
+ <!-- Row for payments -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Payment Details</b></h3>
+            </div>
+            <div class="panel-body">
+
+            	<table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Card Type</b></td>
+                                <td>{{cust.sources.data.0.brand}}</td>
+                            </tr>   
+                            <tr>
+                                <td>Card Number</td>
+                                <td>xxxx-xxxx-xxxx-{{cust.sources.data.0.last4}}</td>
+                            </tr>
+                            <tr>
+                                <td>Expiration</td>
+                                <td>{{cust.sources.data.0.exp_month}}/{{cust.sources.data.0.exp_year}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+        <!-- Form column -->    
+        <form method="post" action="" id="payment-form">
+            {% csrf_token %}
+            {% include "appointments/creditcardcomponent.html" %}
+        </form>
+            
+         
+</div>
+
+
+{% endblock %}

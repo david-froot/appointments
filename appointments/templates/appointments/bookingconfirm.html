@@ -1,0 +1,118 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+<div class="col-md-6">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'patients:dashboard' %}">Home</a></li>
+            <li><a href="{% url 'appointments:myappts' %}">Appointments</a></li>
+            <li><a href="{% url 'appointments:visits' %}">Site Visits</a></li>
+            <li class="active">Confirm Booking</li>
+        </ol>
+        <h1>Confirm Booking</h1>
+        <hr>
+    </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Booking Details</b></h3>
+            </div>
+            <div class="panel-body">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Date</th>
+                        <th>Location</th>
+                        <th>Location Details</th>
+                        <th>Co-Pay</th>
+                        <th>Applied Credit</th>
+                        <th>Details</th>
+                        <th></th>
+                        <th>Total Due</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>{{request.user.patient.info.firstName|title}} {{request.user.patient.info.last_name}}</td>
+                            <td>{{slot.start}}</td>
+                            <td>{{slot.sitevisit.company.address}}{{slot.siteday.company.city}} {{slot.siteday.company.state}}</td>
+                            <td>{{slot.sitevisit.details}}</td>
+                            <td>${{request.user.patient.info.insurer.copay}}</td>
+                            <td>{{request.user.credit}}</td>
+                            <td>{{slot.siteday.details}}</td>
+                            <td></td>
+                            <td>${{needToPay}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>    
+            </div>
+        </div>
+    </div> <!-- End Row -->
+
+
+    <!-- Row for payments -->
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><b>Payment Details</b></h3>
+            </div>
+            <div class="panel-body">
+
+                <!-- Form column -->    
+                {% if request.user.patient.stripe_customer_id == None %}
+                    <form method="post" action="{% url 'appointments:pay' slot.id %}" id="payment-form">
+                        {% csrf_token %}
+                        {% include "appointments/creditcardcomponent.html" %}
+                    </form>
+                {% else %}
+                     <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><b>Card Type</b></td>
+                                <td>{{cust.sources.data.0.brand}}</td>
+                            </tr>   
+                            <tr>
+                                <td>Card Number</td>
+                                <td>xxxx-xxxx-xxxx-{{cust.sources.data.0.last4}}</td>
+                            </tr>
+                            <tr>
+                                <td>Expiration</td>
+                                <td>{{cust.sources.data.0.exp_month}}/{{cust.sources.data.0.exp_year}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <form method="post" action="{% url 'appointments:pay' slot.id %}">
+                                <button class="btn btn-success btn-lg btn-block" type="submit" >Book Appointment</button>
+                            {% csrf_token %}
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            
+            </div>
+        </div>
+    </div>
+
+    
+   
+
+
+</div>
+<!--
+<form action=" {% url 'appointments:pay' slot.id %}" method="POST">
+    {% csrf_token %}
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="pk_test_6pRNASCoBOKtIshFeQd4XMUh"
+    data-amount="2000" data-name="Virtudent"
+    data-description="Virtudent Appointment Co-Pay"
+    data-panel-label="" data-label="Book and Pay"
+    data-image="/static/img/favicon.png"
+    data-email="{{user.email}}" data-locale="auto">
+    </script>
+</form>
+-->
+{% endblock %}

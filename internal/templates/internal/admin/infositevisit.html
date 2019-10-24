@@ -1,0 +1,160 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+
+<div class="row">
+	<h1>Site Visit to <b>{{appts.0.sitevisit.company.company_name}}</b> on <b>{{appts.0.visit.date}}</b></h1>
+
+	<hr>
+	<div class="col-md-12">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Start</th>
+					<th>End</th>
+					<th>Patient</th>
+					<th>Booked</th>
+					<th>Insurer</th>
+					<th>Policy Number</th>
+					<th>Group Number</th>
+					<th>Paid</th>
+					<th>Insurance OK</th>
+					<th>Break</th>
+					<th></th>
+					<th>More</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for a in appts %}
+				<tr>
+					<td>{{a.start|date:'h:i'}}</td>
+					<td>{{a.end|date:'h:i'}}</td>
+					<td>
+						{{a.patient.info.all.0.first_name | title}} 
+						{{a.patient.info.all.0.last_name | title }}
+					</td>
+					<td>{{a.is_booked|yesno|title}}</td>
+					
+					
+
+					<td>
+						{{a.patient.info.insurer.insurer_name}}
+					</td>
+					<td>
+						{{a.patient.info.insurance_policy_number}}
+					</td>
+					<td>
+						{{a.patient.info.insurance_group_number}}
+					</td>
+
+					<td>
+						<span id="paid{{a.id}}" class="c{{a.reimbursementConfirmed}}">{{a.is_paid|yesno|title}}</span>
+					</td>
+					
+
+					<!-- Insurance -->
+					<td>
+						<span id="reimb{{a.id}}" class="c{{a.reimbursementConfirmed}}">{{a.reimbursement_confirmed|yesno|title}}</span>
+						<a  class="btn btn-info btn-sm" onclick="yesreimburse({{a.id}})">X</a>
+					</td>
+					
+
+					<!-- Booking or break ? -->
+					{% if a.is_booked %}
+						<td>{{a.is_break}}</td>
+						<td>
+				  			<a href="#" class="btn btn-danger btn-sm">Cancel</a>
+				  		</td>
+			  		{% elif a.is_break %}
+				  		<td><b style="color: red">Break</b>
+				  		<td>
+				  			<a href='/portal/admin/appointment/block/{{a.id}}/' class="btn btn-success btn-sm">Unblock</a>
+				  		</td>
+			  		{% else %}
+				  		<td><b style="color:green;">Not Booked</b></td>
+				  		<td>
+				  			<a href='/portal/admin/appointment/block/{{a.id}}/' class="btn btn-warning btn-sm">Block</a>
+				  		</td>
+			  		{% endif %}
+
+					<td>
+						{% if a.is_booked%}
+							<a href="/portal/admin/appointment/info/{{a.id}}/">More Info</a>
+						{% endif %}
+					</td>
+				</tr>
+
+				{% endfor %}
+			</tbody>
+		</table
+
+	</div>
+</div>
+<style>
+.cTrue {
+	color: green;
+}
+.cFalse {
+	color: red;
+}
+</style>
+
+<script>
+
+yesreimburse = function(slot_id) {
+	url = "/portal/admin/appointment/reimbursement/" + slot_id + "/"
+	console.log('call!')
+	$.ajax({
+          url : url,
+          success : function(json) {
+          	console.log(json)
+          	var t = '#reimb' + slot_id
+          	if ($(t).text()=='No') { 
+          		$(t).text('Yes'); 
+          		$(t).removeClass();
+          		$(t).addClass('cTrue');
+          	}
+          	else{
+       			$(t).text('No');
+       			$(t).removeClass();
+       			$(t).addClass('cFalse');
+          	}
+          }
+	});
+}
+
+
+</script>
+<!--
+<a class="btn btn-primary" href="/dentistportal/addvisit/">Add Company Visit</a>
+<hr>
+<div class="row">
+	<div class="col-md-8">
+	{% for v in visits %}
+	
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	<strong>{{v.company.companyName}} - {{v.date|date:'D, F d'}}, {{v.start|date:'h:i A'}} - {{v.end|date:'h:i A'}}</strong>
+		  	<span class="pull-right"><button class="btn btn-info" data-toggle="collapse" data-target="#demo">Show/Hide Slots</button></span>
+		  	<a href="/dentistportal/infositevisit/{{v.id}}/">More Info</a>
+		  	<hr>
+		  </div>
+		  <div class="panel-body collapse" id="demo">
+		    <ul class="list-group">
+			  {% for apt in v.patientappointmentslot_set.all  %}
+			  	<li class="list-group-item">
+			  			<strong>{{apt.start.time|date:'h:i A'}} - {{apt.end.time|date:'h:i A'}}</strong>
+			  			<br>
+			  			<b>Patient:</b> 
+			  			
+			  	</li>
+			  {% endfor %}
+			</ul>
+		  </div>
+		</div>
+	
+	{% endfor %}
+	</div>
+</div>
+-->
+{% endblock %}

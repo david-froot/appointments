@@ -1,0 +1,50 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+    <div class="row">
+    <ol class="breadcrumb">
+    <li><a href="../dashboard/">Home</a></li>
+    <li><a href="../" >Forms</a></li>
+    <li class="active">Surgeries</li>
+    </ol>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><b>Surgeries</b></h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% for record in existing %}
+                <li class="list-group-item">
+                    <b>Procedure</b><span class="pull-right">{{record.procedure_name}}</span>
+                    <br>
+                    <b>Date</b><span class="pull-right">{{record.date}}</span>
+                    <br>
+                    <b>Surgeon</b><span class="pull-right">{{record.surgeon_name}}</span>                    
+                    <br>
+                    <form action="/patients/forms/surgery/delete/{{record.id}}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form> 
+                </li>
+                {% endfor %}
+                <li class="list-group-item">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                        {% endbuttons %}
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </form>
+                </li>
+            </div>
+       </div>
+      </div>
+    </div> <!-- end row -->
+</div> <!-- end column -->
+
+{% endblock %}
+                                

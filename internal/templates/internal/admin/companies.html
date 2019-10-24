@@ -1,0 +1,26 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+<p><a class="btn btn-primary" href="/portal/admin/company/add/">Add Company</a></p>
+
+<table data-toggle="table">
+    <thead>
+        <tr>
+            <th>Company Code</th>
+            <th>Company Name</th>
+            <th>Address</th>
+            <th>Edit</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in companies %}
+        <tr>
+            <td>{{c.company_name}}</td>
+            <td>{{c.company_code}}</td>
+            <td>{{c.company_address}} {{c.city}} {{c.state}} {{c.zipcode}}</td>
+            <td><a href="/portal/admin/company/edit/?code={{c.id}}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

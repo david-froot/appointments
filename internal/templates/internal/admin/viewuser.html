@@ -1,0 +1,36 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<a class="btn btn-primary btn-lg" href="/portal/admin/user/add/">Add New User</a>
+<div class="row">
+
+
+	<div class="col-md-8">
+
+      <h3>Existing Users</h3>
+      <table data-toggle="table">
+	    <thead>
+	        <tr>
+	            <th>User</th>
+	            <th>Email</th>
+	            <th>Role</th>
+	        </tr>
+	    </thead>
+	    <tbody>
+	        {% for w in workers %}
+	        <tr>
+	            <td>{{w.username}}</td>
+	            <td>{{w.email}}</td>
+	            <td>{{w.role}}</td>
+	        </tr>
+	        {% endfor %}
+	    </tbody>
+	</table>
+
+
+
+  </div><!-- Column -->
+</div>		<!-- Row -->
+
+{% endblock %}

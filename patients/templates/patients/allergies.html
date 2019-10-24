@@ -1,0 +1,54 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+    <div class="row">
+    <ol class="breadcrumb">
+    <li><a href="../dashboard/">Home</a></li>
+    <li><a href="../" >Forms</a></li>
+    <li class="active">Allergies</li>
+    </ol>
+
+    
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><b>Allergies</b></h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% for record in existing %}
+                <li href="#" class="list-group-item">
+                    <b>Allergen</b><span class="pull-right">{{record.allergen_name}}</span>
+                    <br>
+                    <b>Reaction</b><span class="pull-right">{{record.reaction}}</span>
+                    <br>
+                    <b>Severity</b><span class="pull-right">{{record.severity}}</span>
+                    <br>
+                    <b>Allergen Type</b><span class="pull-right">{{record.allergen_type}}</span>
+                    <br>
+                    <form action="/patients/forms/allergy/delete/{{record.id}}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form> 
+                </li>
+                {% endfor %}
+                <li class="list-group-item">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                        {% endbuttons %}
+                        <button type="submit" class="btn btn-primary">
+                            {% bootstrap_icon "star" %} Submit
+                        </button>
+                    </form>
+                </li>
+            </div>
+       </div>
+      </div>
+    </div> <!-- end row -->
+</div> <!-- end column -->
+
+{% endblock %}
+                                

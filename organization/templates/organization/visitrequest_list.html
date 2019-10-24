@@ -1,0 +1,29 @@
+{% extends "organization/dashboard_wrapper.html" %}
+{% block tabcontent %}
+
+<h1> Site Visits</h1>
+<a href="/organization/visitrequests/create/" class="btn btn-primary">Submit New Request for Visit</a>
+<hr>
+
+
+<table class="table">
+    <thead>
+        <th>Range</th>
+        <th>Status</th>
+        <th>Delete</th>
+    </thead>
+    <tbody>
+
+    {% for visit in visits %}
+        <tr>
+            <td>{{visit.window_start}} - {{visit.window_end}}</td>
+            <td>{{visit.status}}</td>
+            <td><a href="/organization/visitrequests/delete/{{visit.id}}/">Delete</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+
+{% endblock %}

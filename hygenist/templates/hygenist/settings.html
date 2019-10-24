@@ -1,0 +1,35 @@
+{% extends "hygenist/dashboard_wrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-6">
+	<div class="row">
+	<ol class="breadcrumb">
+		<li><a href="/hygenist/dashboard/">Dashboard</a></li>
+		<li class="active">Settings</li>
+    </ol>
+		<form action="" method="post" class="form" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% bootstrap_form form %}
+          {% buttons %}
+          <button type="Update" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Save
+          </button>
+          {% endbuttons %}
+        </form>
+	</div>
+
+	<hr>
+	<div class="row">
+		<p><a class="btn btn-primary" href="/hygenist/settings/profilephoto/">Change Profile Photo</a></p>
+		<p><a class="btn btn-primary" href="/users/changeemail/">Change Email</a></p>
+		<p><a class="btn btn-primary" href="/users/changepassword/">Change Password</a></p>
+	</div>
+
+
+</div>
+
+        
+
+
+{% endblock %}

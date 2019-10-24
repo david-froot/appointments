@@ -1,0 +1,26 @@
+{% extends "organization/dashboard_wrapper.html" %}
+{% block tabcontent %}
+
+<h1> Completed Visits</h1>
+
+<table class="table">
+    <thead>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Hygenist</th>
+        <th></th>
+    </thead>
+    <tbody>
+
+    {% for visit in complete %}
+        <tr>
+            <td>{{visit.date}}</td>
+            <td>Completed</td>
+            <td>{{visit.hygenist.user.first_name}} {{visit.hygenist.user.last_name}}</td>
+            <td><a href="/organization/visits/completed/rate/{{visit.id}}/">Rate!</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

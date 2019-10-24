@@ -1,0 +1,53 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+    <div class="row">
+    <ol class="breadcrumb">
+    <li><a href="../dashboard/">Home</a></li>
+    <li><a href="../" >Forms</a></li>
+    <li class="active">Medications</li>
+    </ol>
+    
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><b>Medications</b></h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% for record in existing %}
+                <li href="#" class="list-group-item">
+                    <b>Medication</b><span class="pull-right">{{record.medication_name}}</span>
+                    <br>
+                    <b>Start Date</b><span class="pull-right">{{record.date_started}}</span>
+                    <br>
+                    <b>Dosage Form</b><span class="pull-right">{{record.dosage_form}}</span>                    
+                    <br>
+                    <b>Strength</b><span class="pull-right">{{record.strength}}</span>
+                    <br>
+                    <form action="/patients/forms/medicine/delete/{{record.id}}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form> 
+                </li>
+                {% endfor %}
+                <li class="list-group-item">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                        {% endbuttons %}
+                        <button type="submit" class="btn btn-primary">
+                            {% bootstrap_icon "star" %} Submit
+                        </button>
+                    </form>
+                </li>
+            </div>
+       </div>
+      </div>
+    </div> <!-- end row -->
+</div> <!-- end column -->
+
+{% endblock %}
+                                

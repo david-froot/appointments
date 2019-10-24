@@ -1,0 +1,35 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+<div class="col-md-8">
+	<div class="row">
+	  <ol class="breadcrumb">
+	    <li><a href="{% url 'patients:dashboard' %}">Home</a></li>
+	    <li class="active">Appointments</li>
+	  </ol>
+	  <h1>My Appointments</h1>
+	  <hr>
+	</div>
+	
+	{%if appt|length == 0%}
+		<div class="row">
+			<h3>No Scheduled Visits!</h3>
+			<p>Click below for dates when we will be visiting you office and select a time that works for you!</p>
+			<a href="{% url 'appointments:visits' %}" class="btn btn-primary">My Visits</a>
+		</div>
+
+	{% else %}
+		<div class="row">
+			<h2>Your next appointment is scheduled for:</h2>
+			<h3>
+				<b>{{appt.0.sitevisit.date}}</b> at <b>{{appt.0.start|date:"g:i A"}} to {{appt.0.end|date:"g:i A"}}</b>
+			</h3>
+			<a href="{% url 'appointments:cancel' appt.0.id %}" class="btn btn-danger">Cancel</a>
+			<br>
+			<p style="font-size: 10px;">Cancellations must be at least 72 hours in advance. Your co-pay will be applied to your next appointment.  If you need to reschedule, simply select a new time below and click "Reschedule"</p>
+		
+		</div>	<!-- Row -->
+	{%endif %}
+</div>
+
+{% endblock %}

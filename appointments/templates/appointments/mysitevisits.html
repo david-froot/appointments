@@ -1,0 +1,79 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'patients:dashboard' %}">Home</a></li>
+            <li><a href="{% url 'appointments:myappts' %}">Appointments</a></li>
+            <li class="active">Site Visits</li>
+        </ol>
+
+        <h1>Upcoming Visits to Your Location</h1>
+        <p><b>{{user.patient.info.company.company_name}}</b><br>
+        {{user.patient.info.company.address}}<br>
+        {{user.patient.info.company.city}} {{user.patient.info.company.state}} {{user.patient.info.company.zipcode}}
+        <hr>
+
+    </div>
+        {% if visits|length == 0 %}
+        <div class="row">
+            <p>Sorry! No visits to your office are currently scheduled.  We'll let you know when we do!</p>
+        </div>
+        {% else %}
+        {% for a in visits  %}
+        <div class="row">
+        <ul class="list-group">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-6">
+                  <h5><b>{{a.date}} at {{a.location}}</b></h5>
+                  <h5>{{a.location.address}}</h5>
+                  <h5>{{a.location.city}} {{a.location.state}} {{a.location.zipcode}}</h5>
+              </div>
+              <div class="col-md-6">
+                  <button data-toggle="collapse" class="btn btn-info btn-sm pull-right" data-target="#a{{a.id}}">Available Appointments
+                  </button>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+        <div id="a{{a.id}}" class="collapse">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for slot in a.patientappointmentslot_set.all%}
+                    {% if not slot.isBooked and not slot.isBreak %}
+                    <tr>
+                        <td>{{slot.start|date:"g:i A"}}</td>
+                        <td>{{slot.end|date:"g:i A"}}</td>
+
+                        {% if scheduled_appts|length == 0  %}
+                        <td><a href="{% url 'appointments:confirm' slot.id %}" class="btn btn-success center-block">Book</a></td>
+                        {% else %}
+                        <td><a href="{% url 'appointments:confirm' slot.id %}" class="btn btn-warning center-block">Reschedule</a></td>
+
+                        {% endif %}
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div> <!-- Collapse -->
+    </div><!-- Row -->
+
+</li>
+</ul>
+{%endfor%}
+{% endif %}
+
+</div>
+
+{% endblock %}

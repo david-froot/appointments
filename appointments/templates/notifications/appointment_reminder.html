@@ -1,0 +1,22 @@
+Hello {{appointment.patient.first_name}}!
+
+Thanks for booking with Virtudent! This is a friendly reminder about your upcoming appointment!
+
+Your appointment is scheduled for:
+
+{{appointment.start}} - {{appointment.end}} <br>
+{{appointment.sitevisit.address}} <br>
+{{appointment.sitevisit.city}} {{appointment.sitevisit.state}} {{appointment.sitevisit.zipcode}}
+Additional Details:
+{{appointment.sitevisit.details}}
+
+You can manage your appointments online at 
+
+https://{{site.domain}}/appointments/
+
+See you then!
+
+Virtudent Team
+
+
+

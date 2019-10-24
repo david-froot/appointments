@@ -1,0 +1,37 @@
+{% extends "core.html" %}
+{% block content %}
+{% load bootstrap3 %}
+<div class="container" id="main">
+<div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Settings</h3>
+      </div>
+      <div class="panel-body">
+        
+        <form action="/users/changeemail/" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form emailform %}
+          {% buttons %}
+          <button type="Update" class="btn btn-primary">
+            Change Email
+          </button>
+          {% endbuttons %}
+        </form>
+        <hr>
+
+        <form action="/users/changepassword/" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form passwordform %}
+          {% buttons %}
+          <button type="Update" class="btn btn-primary">
+            Change Password
+          </button>
+          {% endbuttons %}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Patient Name</th>
+            <th>Patient Insurance</th>
+            <th>Gender</th>
+            <th>DOB</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for p in patients %}
+        <tr>
+            <td>{{p.first_name}} {{p.last_name}}</td>
+            <td>{{p.company_name}}</td>
+            <td>{{p.gender}}</td>
+            <td>{{p.dob}}</td>
+            <td><a href="#">More Info</a></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

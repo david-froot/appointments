@@ -1,0 +1,85 @@
+<!-- Credit card resources -->
+
+
+
+
+<div class="panel panel-default credit-card-box">
+    <div class="panel-heading panel-default" >
+        
+            
+            Add / Update Payment Details
+        
+    </div>
+    <div class="panel-body">
+            <div class="display-td" >                            
+                <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+            </div>
+        
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number</label>
+                        <div class="input-group">
+                            <input 
+                                type="tel"
+                                class="form-control"
+                                name="cardNumber"
+                                placeholder="Valid Card Number"
+                                autocomplete="cc-number"
+                                required autofocus 
+                            />
+                            <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                        </div>
+                    </div>                            
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-7 col-md-7">
+                    <div class="form-group">
+                        <label for="cardExpiry"><span class="hidden-xs">Expiration</span></label>
+                        <input 
+                            type="tel" 
+                            class="form-control" 
+                            name="cardExpiry"
+                            placeholder="MM / YY"
+                            autocomplete="cc-exp"
+                            required 
+                        />
+                    </div>
+                </div>
+                <div class="col-xs-5 col-md-5 pull-right">
+                    <div class="form-group">
+                        <label for="cardCVC">CVC Code</label>
+                        <input 
+                            type="tel" 
+                            class="form-control"
+                            name="cardCVC"
+                            placeholder="CVC"
+                            autocomplete="cc-csc"
+                            required
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        
+                        <input type="hidden" class="form-control" name="couponCode"/>
+                    </div>
+                </div>                        
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <button class="subscribe btn btn-success btn-lg btn-block" type="button">Submit</button>
+                </div>
+            </div>
+            <div class="row" style="display:none;">
+                <div class="col-xs-12">
+                    <p class="payment-errors"></p>
+                </div>
+            </div>
+        
+    </div>
+</div>  
+

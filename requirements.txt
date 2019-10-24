@@ -1,0 +1,7 @@
+Django==1.10.6
+django-autofixture==0.12.1
+django-bootstrap3==8.2.1
+olefile==0.44
+requests==2.13.0
+stripe==1.50.0
+wheel==0.24.0

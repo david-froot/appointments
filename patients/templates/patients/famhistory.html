@@ -1,0 +1,53 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+    <div class="row">
+    <ol class="breadcrumb">
+    <li><a href="../dashboard/">Home</a></li>
+    <li><a href="../" >Forms</a></li>
+    <li class="active">Family History</li>
+    </ol>
+    
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title"><b>Family History</b></h3>
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                {% for record in existing %}
+                <li href="#" class="list-group-item">
+                    <b>Disease</b><span class="pull-right">{{record.disease}}</span>
+                    <br>
+                    <b>Relationship</b><span class="pull-right">{{record.relationship}}</span>
+                    <br>
+                    <b>Status</b><span class="pull-right">{{record.status}}</span>                    
+                    <br>
+                    <b>Details</b><span class="pull-right">{{record.details}}</span>
+                    <br>
+                    <form action="/patients/forms/familyhistory/delete/{{record.id}}/" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Delete</button>
+                    </form> 
+                </li>
+                {% endfor %}
+                <li class="list-group-item">
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {% bootstrap_form form %}
+                        {% buttons %}
+                        {% endbuttons %}
+                        <button type="submit" class="btn btn-primary">
+                            {% bootstrap_icon "star" %} Submit
+                        </button>
+                    </form>
+                </li>
+            </div>
+       </div>
+      </div>
+    </div> <!-- end row -->
+</div> <!-- end column -->
+
+{% endblock %}
+                                

@@ -1,0 +1,17 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+<div class="col-md-8">
+	<div class="row">
+        <ol class="breadcrumb">
+            <li><a href="{% url 'patients:dashboard' %}">Home</a></li>
+            <li><a href="{% url 'appointments:myappts' %}">Appointments</a></li>
+            <li class="active">Site Visits</li>
+        </ol>
+		<h1>Oops!</h1>
+		<p>Looks like you haven't filled out the necessary information to schedule an appointment!</p>
+		<p>Please fill out the <a href="/patients/forms/patientinfo/">Patient Information</a> form first!</p>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+<a class="btn btn-primary" href="/portal/admin/sitevisit/add/">Add Company Visit</a>
+<hr>
+<table class="table">
+	<thead>
+		<tr>
+			<th>Company</th>
+			<th>Address</th>
+			<th>Date</th>
+			<th>Start</th>
+			<th>End</th>
+			<th>Booked Appts</th>
+			<th>More Info</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for v in visits %}
+			<tr>
+				<td>{{v.company.company_name}}</td>
+				<td>{{v.company.address}}, {{v.company.city}} {{v.company.state}}</td>
+				<td>{{v.date|date:'D, F d'}}</td>
+				<td>{{v.start|date:'h:i A'}}</td>
+				<td>{{v.end|date:'h:i A'}}</td>
+				<td></td>
+				<td><a href="/portal/admin/sitevisit/info/{{v.id}}/">More Info</a></td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

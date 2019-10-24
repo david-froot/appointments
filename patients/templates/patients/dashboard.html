@@ -1,0 +1,35 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+
+<div class="marketing">
+	  <!-- Three columns of text below the carousel -->
+	  <div class="row">
+	  	<div class="col-md-12">
+	  	<h2>Welcome back!</h2>
+	  	<br><br>
+	  </div>
+
+	  </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <img class="img-circle" src="/static/img/forms.png"width="180" height="180">
+          <h2></h2>
+          <p><a class="btn btn-primary" href="/patients/forms/" role="button">Forms &raquo;</a></p>
+          <p>Fill opit forms from home prior to visit</p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-sm-4">
+          <img class="img-circle" src="/static/img/appointments.png" width="180" height="180">
+          <h2></h2>
+          <p><a class="btn btn-primary" href="/appointments/" role="button">Appointments &raquo;</a></p>
+          <p>Schedule new or review existing appointments</p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-sm-4">
+          <img class="img-circle" src="/static/img/myDentalHealth.png" width="180" height="180">
+          <h2></h2>
+          <p><a class="btn btn-primary" href="/patients/myhealth/" role="button">My Dental Health &raquo;</a></p>
+          <p>Review your dental records from past appointments and diagnosis</p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+</div> <!--container -->
+
+{% endblock %}

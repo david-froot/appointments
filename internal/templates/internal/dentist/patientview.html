@@ -1,0 +1,38 @@
+{% extends "denist/dentistdashboardwrapper.html" %}
+{% block tabcontent %}
+<div class="col-md-12">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="../dashboard/">Dashboard</a></li>
+            <li class="active">Patients</li>
+        </ol>
+        <h1>Patients</h1>
+        <hr>
+    </div> <!-- end row -->
+
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Insurer</th>
+                    <th>History</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in patients %}
+                <tr>
+                    <td>{{p.info.first_name}} {{p.info.last_name}}</td>
+                    <td>{{p.info.insurer.insurer_name}}</td>
+                    <td><a href="/hygenist/patient/{{p.id}}/">History</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+    
+</div>
+
+
+{% endblock %}

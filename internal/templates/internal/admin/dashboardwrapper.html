@@ -1,0 +1,46 @@
+{% extends "core.html" %}
+{% block content %}
+
+<div class="container" style="padding-top: 70px;">
+	<!-- MEssage box -->
+	<div class="row">
+		<div class="col-sm-2" data-tabs="tabs">
+			<ul class="nav nav-pills nav-stacked">
+				<li {% ifequal request.path "/portal/admin/dashboard/" %} class="active" {% endifequal %}>
+					<a href="/portal/admin/dashboard/">Dashboard</a>
+				</li>
+
+				<li {% ifequal request.path "/portal/admin/company/view/" %} class="active" {% endifequal %}>
+					<a href="/portal/admin/company/view/">Companies</a>
+				</li>
+
+				<li {% ifequal request.path "/portal/admin/insurer/view/" %} class="active" {% endifequal %}>
+					<a href="/portal/admin/insurer/view/">Insurers</a>
+				</li>
+
+				<li {% ifequal request.path "/portal/admin/patient/view/" %} class="active" {% endifequal %}>
+					<a href="/portal/admin/patient/view/">Patients</a>
+				</li>
+				<li {% ifequal request.path "/portal/admin/user/view/" %} class="active" {% endifequal %}>
+					<a href="/portal/admin/user/view/">Users</a>
+				</li>
+				
+				<li {% ifequal request.path "/portal/admin/sitevisit/view/" %} class="active" {% endifequal %}>
+					<a href="/portal/admin/sitevisit/view/">Appointments</a>
+				</li>
+				<li {% ifequal request.path "/users/settings/" %} class="active" {% endifequal %}>
+					<a href="/users/settings/">Settings</a>
+				</li>
+			</ul>
+		</div>
+
+		<div class="col-sm-10" id="topthing">
+			
+			{% block tabcontent %}
+
+			{% endblock %}
+		</div>
+	</div>
+
+</div>
+{% endblock %}

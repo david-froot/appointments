@@ -1,0 +1,23 @@
+{% extends "internal/referral/dashboard_wrapper.html" %}
+{% block tabcontent %}
+
+<div class="col-md-12">
+    <div class="row">
+        <ol class="breadcrumb">
+            <li><a href="/internal/{{request.user.group}}/dashboard/">Dashboard</a></li>
+            <li><a href="/internal/{{request.user.group}}/patients/">Patients</a></li>
+            <li><a href="/internal/{{request.user.group}}/patients/{{appt.patient.id}}/">Patient History</a></li>
+            <li class="active">Appointment Details</li>
+        </ol>
+        <h1>Appointment Details</h1>
+        {{appts.0.}}
+        <hr>
+    </div> <!-- end row -->
+
+    <div class="row">
+       <h4>Info</h4>
+    </div>
+    
+</div>
+
+{% endblock %}

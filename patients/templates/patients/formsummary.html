@@ -1,0 +1,128 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+
+	<div class="col-md-8">
+		<div class="row">
+		<ol class="breadcrumb">
+		  <li><a href="../dashboard/">Home</a></li>
+		  <li class="active">Forms</li>
+		</ol>
+
+		<h1>My Medical Forms</h1>
+		<hr>
+
+		<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingTwo">
+		      <h4 class="panel-title">
+		        <a class="collapsed"  data-parent="#accordion" href="patientinfo/" aria-expanded="false" aria-controls="collapseTwo">
+		          Patient Information 
+		          {% if request.user.patient.info %}
+		          	<b class="pull-right" style="color:green;">Complete</b>
+		          {% else %}
+		          	<b class="pull-right" style="color:red;">Not Complete</b>
+		          {% endif %}
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+		      <div class="panel-body">
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingTwo">
+		      <h4 class="panel-title">
+		        <a class="collapsed" data-parent="#accordion" href="healthhistory/" aria-expanded="false" aria-controls="collapseTwo">Health History
+		          {% if request.user.patient.healthhistory %}
+		          	<b class="pull-right" style="color:green;">Complete</b>
+		          {% else %}
+		          	<b class="pull-right" style="color:orange;">Not Complete (Optional)</b>
+		          {% endif %}
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseTwo" class="panel-collapse collapse" role="allergies/" aria-labelledby="headingTwo">
+		      <div class="panel-body">
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingTwo">
+		      <h4 class="panel-title">
+		        <a class="collapsed" data-parent="#accordion" href="medicine/" aria-expanded="false" aria-controls="collapseTwo">Medications
+		          {% if request.user.patient.medication_set.all.exists %}
+		          	<b class="pull-right" style="color:green;">Complete</b>
+		          {% else %}
+		          	<b class="pull-right" style="color:orange;">Not Complete (Optional)</b>
+		          {% endif %}
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseTwo" class="panel-collapse collapse" role="allergies/" aria-labelledby="headingTwo">
+		      <div class="panel-body">
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingThree">
+		      <h4 class="panel-title">
+		        <a class="collapsed" data-parent="#accordion" href="allergy/" aria-expanded="false" aria-controls="collapseThree">Allergies
+
+		          {% if request.user.patient.allergy_set.all.exists %}
+		          	<b class="pull-right" style="color:green;">Complete</b>
+		          {% else %}
+		          	<b class="pull-right" style="color:orange;">Not Complete (Optional)</b>
+		          {% endif %}
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+		      <div class="panel-body">
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingThree">
+		      <h4 class="panel-title">
+		        <a class="collapsed" data-parent="#accordion" href="surgery/" aria-expanded="false" aria-controls="collapseThree">Surgeries
+		          {% if request.user.patient.surgery_set.all.exists %}
+		          	<b class="pull-right" style="color:green;">Complete</b>
+		          {% else %}
+		          	<b class="pull-right" style="color:orange	;">Not Complete (Optional)</b>
+		          {% endif %}
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+		      <div class="panel-body">
+		      </div>
+		    </div>
+		  </div>
+		  <div class="panel panel-default">
+		    <div class="panel-heading" role="tab" id="headingThree">
+		      <h4 class="panel-title">
+		        <a class="collapsed" data-parent="#accordion" href="familyhistory/" aria-expanded="false" aria-controls="collapseThree">Family History
+		          {% if request.user.patient.familyhistory_set.all.exists %}
+		          	<b class="pull-right" style="color:green;">Complete</b>
+		          {% else %}
+		          	<b class="pull-right" style="color:orange	;">Not Complete (Optional)</b>
+		          {% endif %}
+		        </a>
+		      </h4>
+		    </div>
+		    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+		      <div class="panel-body">
+		      </div>
+		    </div>
+		  </div>
+
+		</div><!-- Accordian -->
+
+
+	</div>
+  </div><!-- Column -->
+
+{% endblock %}

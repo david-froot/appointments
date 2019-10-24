@@ -1,0 +1,76 @@
+{% extends "organization/dashboard_wrapper.html" %}
+{% block tabcontent %}
+
+
+
+    <div class="col-md-8">
+        <h1> Hello {{request.user.first_name}}! </h1>
+        <hr>
+
+        <h3>Upcoming Visits to your organization</h3>
+        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+          
+        {% for visit in upcoming %}
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading{{visit.id}}">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse{{visit.id}}" aria-expanded="true" aria-controls="collapse{{visit.id}}"><b>Site Visit</b> on {{visit.date}} </a></h4>
+            </div>
+
+            {% if visit.id == upcoming.0.id %}
+                <div id="collapse{{visit.id}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{visit.id}}">
+            {% else %}
+            <div id="collapse{{visit.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{visit.id}}">
+
+            {% endif %}
+                <div class="panel-body">
+                    <div class="col-md-8">
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td><b>Site Visit Date</b></td>
+                                    <td>{{visit.date}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Location</b></td>
+                                    <!--<td>{{visit.address}} {{visit.city}} {{visit.state}} {{visit.zipcode}}</td>-->
+                                    <td>123 Fake Street, Boston MA 02139</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Time</b></td>
+                                    <td>{{visit.start}} - {{visit.end}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Hygenist</b></td>
+                                    <td>{{visit.hygenist.user.first_name}} - {{visit.hygenist.user.last_name}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Details to Patients</b></td>
+                                    <td>{{visit.details}}</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    {% if visit.hygenist.profile_photo %}
+                        <img src="{{visit.hygenist.profile_photo.url}}" alt="" class="img-rounded img-responsive pull-right" style="height: 200px;"/>
+                    {% else %}
+                        <img src="/static/img/stock_profilepic.png" alt="" class="img-rounded img-responsive pull-right" style="height: 200px; width: 180px;"/>
+                        
+                    {% endif %}
+
+                    </div>
+                </div>
+            </div>
+           </div>
+        {% endfor %}
+
+        </div>
+
+    
+    </div>
+    </div> <!-- End column -->
+
+
+{% endblock %}

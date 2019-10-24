@@ -1,0 +1,46 @@
+{% extends "hygenist/dashboard_wrapper.html" %}
+{% block tabcontent %}
+
+<div class="col-md-12">
+  
+  <div class="row">
+  	<ol class="breadcrumb">
+	    <li><a href="{% url  'hygenist:dashboard' %}">Dashboard</a></li>
+	    <li class="active">Site Visits</li>
+    </ol>
+    <h1>Site Visits</h1>
+    <hr>
+  </div> <!-- Row -->
+
+  <div class="row">
+	  <table class="table">
+		<thead>
+			<tr>
+				<th>Company</th>
+				<th>Address</th>
+				<th>Date</th>
+				<th>Start</th>
+				<th>End</th>
+				<th>Booked Appts</th>
+				<th>More Info</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for v in visits %}
+				<tr>
+					<td>{{v.organization.name}}</td>
+					<td>{{v.location.address}}, {{v.location.city}} {{v.location.state}}</td>
+					<td>{{v.date|date:'D, F d'}}</td>
+					<td>{{v.start|date:'h:i A'}}</td>
+					<td>{{v.end|date:'h:i A'}}</td>
+					<td>{{v.num_booked}} of {{v.total_slots}}</td>
+					<td><a href="{% url 'hygenist:visitinfo' v.id %}">More Info</a></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+  </div>
+</div>
+
+
+{% endblock %}

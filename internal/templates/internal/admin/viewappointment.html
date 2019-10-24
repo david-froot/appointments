@@ -1,0 +1,52 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="row">
+    <div class="col-md-10">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Customer</th>
+                    <th>Is Paid?</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{appointment.start}}</td>
+                    <td>{{appointment.end}}</td>
+                    <td>
+                        {{appointment.patient.info.first_name | title}} 
+                        {{appointment.patient.info.last_name | title }}
+                    </td>
+                    <td>{{appointment.isPaid}}</td>
+                </td>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        
+        <form action="" method="post" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                {% bootstrap_icon "star" %} Submit
+            </button>
+            {% endbuttons %}
+        </form>
+    </div>
+    <img src="./{{appointment.upload1.name}}"/>
+<!--
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Submit" />
+</form>-->
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+  <div class="row">
+    <ol class="breadcrumb">
+      <li><a href="../dashboard/">Home</a></li>
+      <li class="active">Settings</li>
+    </ol>
+    <h1>My Settings</h1>
+    <hr>
+  </div>
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Settings</h3>
+      </div>
+      <div class="panel-body">
+        <form action="/users/changeemail/" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form emailform %}
+          {% buttons %}
+          <button type="Update" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Change Email
+          </button>
+          {% endbuttons %}
+        </form>
+        <hr>
+        <form action="/users/changepassword/" method="post" class="form">
+          {% csrf_token %}
+          {% bootstrap_form passwordform %}
+          {% buttons %}
+          <button type="Update" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Change Password
+          </button>
+          {% endbuttons %}
+        </form>
+      </div>
+    </div> <!-- Panel -->
+  </div> <!-- Row -->
+</div>
+{% endblock %}

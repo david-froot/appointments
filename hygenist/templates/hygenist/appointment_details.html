@@ -1,0 +1,148 @@
+
+{% extends "hygenist/dashboard_wrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-7">
+    <div class="row">
+        <h1><b>{{appointment.patient.info.first_name | title}} {{appointment.patient.info.last_name | title }}</b> at <b>{{appointment.start}}</b></h1>
+
+        <hr>
+    </div> <!-- end row -->
+    
+    <div class="row">    
+        <form action="" method="post" class="form" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% bootstrap_form form %}
+            {% buttons %}
+            <button type="submit" class="btn btn-primary">
+                Submit
+            </button>
+            {% endbuttons %}
+        </form>
+    </div> 
+</div> <!-- end col -->
+<div class="col-md-5">
+
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" style="padding-top: 80px;">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Patient Information
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <table data-toggle="table" data-card-view="true">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>Gender</th>
+                    <th>DOB</th>
+                    <th>Phone #</th>
+                    <th>Emergency</th>
+                    <th>Emergency #</th>
+                    <th>Insurer</th>
+                    <th>Policy # / Group</th>
+                </tr>
+            </thead>
+            <tbody >
+                <tr >
+                    <td>{{appointment.patient.info.first_name|title}} {{appointment.patient.info.last_name|title}}</td>
+                    <td>{{appointment.patient.info.address}}, {{appointment.patient.info.city}} {{appointment.patient.info.state}} {{appointment.patient.info.zipcode}} </td>
+                    <td>{{appointment.patient.info.gender}}</td>
+                    <td>{{appointment.patient.info.dob}}</td>
+                    <td>{{appointment.patient.info.phone}}</td>
+                    <td>{{appointment.patient.info.contact_first_name}} {{appointment.patient.info.contact_last_name}}</td>
+                    <td>{{appointment.patient.info.contact_phone}}</td>
+                    <td>{{appointment.patient.info.insurer.insurer_name}}</td>
+                    <td>{{appointment.patient.info.insurance_policy_number}} / {{appointment.patient.info.insurance_group_number}}</td>
+                <tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Health History
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        Health History
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Medications
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+        Medications
+      </div>
+    </div>
+  </div>
+    <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingFour">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Allergies
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+      <div class="panel-body">
+        Allergies
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingFive">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Surgeries
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
+      <div class="panel-body">
+        Surgeries
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingSix">
+      <h4 class="panel-title">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+          Family History
+        </a>
+      </h4>
+    </div>
+    <div id="collapseSix" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingSix">
+      <div class="panel-body">
+        Family History
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+</div>
+{% endblock %}

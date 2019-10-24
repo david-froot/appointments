@@ -1,0 +1,42 @@
+{% extends "portal/admin/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="container">
+	<div class="row">
+
+		<a href="/portal/admin/insurer/add/" class="btn btn-primary btn-large">Add Insurer</a>
+		<br>
+	
+
+
+		<div class="col-md-8">
+	      <h3>Existing Approved Insurers</h3>
+	      <table data-toggle="table">
+		    <thead>
+		        <tr>
+		            <th>Insurer Name</th>
+		            <th>Insurer Code</th>
+		            <th>Edit</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        {% for i in insurers %}
+		        <tr>
+		            <td>{{i.insurer_name}}</td>
+		            <td>{{i.insurer_code}}</td>
+		            <td><a href="/portal/admin/insurer/edit/?code={{i.id}}">Edit</a></td>
+		        </tr>
+		        {% endfor %}
+		    </tbody>
+		</table>
+
+
+
+	  </div><!-- Column -->
+
+
+	</div>		<!-- Row -->
+</div> <!--container -->
+
+{% endblock %}

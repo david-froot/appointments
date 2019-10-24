@@ -1,0 +1,38 @@
+{% extends "patients/dashboardwrapper.html" %}
+{% block tabcontent %}
+{% load bootstrap3 %}
+
+<div class="col-md-8">
+  <div class="row">
+
+
+  <ol class="breadcrumb">
+    <li><a href="../dashboard/">Home</a></li>
+    <li><a href="../" >Forms</a></li>
+    <li class="active">Health History</li>
+  </ol>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title"><b>Health History</b></h3>
+    </div>
+    <div class="panel-body">
+            <div>
+            <form action="" method="post" class="form" novalidate>
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              {% buttons %}
+              {% endbuttons %}
+              <button type="submit" class="btn btn-primary">
+                  {% bootstrap_icon "star" %} Submit
+              </button>
+              
+            </form>
+        </div>
+    </div>
+  </div>
+  </div>
+
+  </div>
+
+{% endblock %}
